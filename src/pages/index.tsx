@@ -12,8 +12,22 @@ import {
 import { bubbleSort } from '@/algorithms/bubbleSort';
 import { sleep } from '@/utils/common';
 import { selectionSort } from '@/algorithms/selectionSort';
+import { insertionSort } from '@/algorithms/insertionSort';
 
-const sorts = [bubbleSort, selectionSort];
+const sorts = [
+  {
+    name: 'bubbleSort',
+    fn: bubbleSort,
+  },
+  {
+    name: 'selectionSort',
+    fn: selectionSort,
+  },
+  {
+    name: 'insertionSort',
+    fn: insertionSort,
+  },
+];
 
 export default function IndexPage() {
   const [maxLength, setMaxLength] = useState(10000);
@@ -28,13 +42,13 @@ export default function IndexPage() {
     option.current = generateChartOption(xAxisData);
 
     for (let i = 0; i < sorts.length; i++) {
-      const sortFn = sorts[i];
+      const sort = sorts[i];
 
-      setLog(`${sortFn.name}...`);
+      setLog(`${sort.name}...`);
       await sleep(500);
       for (const length of xAxisData) {
         const arr = generateRandomArr(length);
-        const cost = await getAlgorithmCost(sortFn, arr);
+        const cost = await getAlgorithmCost(sort.fn, arr);
         option.current = pushChartData(option.current, i, cost);
         console.log('arr :>> ', arr);
       }
