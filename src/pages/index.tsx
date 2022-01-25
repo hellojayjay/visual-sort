@@ -11,6 +11,9 @@ import {
 } from '@/utils/chart';
 import { bubbleSort } from '@/algorithms/bubbleSort';
 import { sleep } from '@/utils/common';
+import { selectionSort } from '@/algorithms/selectionSort';
+
+const sorts = [bubbleSort, selectionSort];
 
 export default function IndexPage() {
   const [maxLength, setMaxLength] = useState(10000);
@@ -24,15 +27,23 @@ export default function IndexPage() {
     const xAxisData = generateXAxisData(maxLength);
     option.current = generateChartOption(xAxisData);
 
-    setLog('冒泡排序中...');
-    await sleep(300);
-    for (const length of xAxisData) {
-      const arr = generateRandomArr(length);
-      const cost = await getAlgorithmCost(bubbleSort, arr);
-      option.current = pushChartData(option.current, 0, cost);
+    for (let i = 0; i < sorts.length; i++) {
+      const sortFn = sorts[i];
+
+      setLog(`${sortFn.name}...`);
+      await sleep(500);
+      for (const length of xAxisData) {
+        const arr = generateRandomArr(length);
+        const cost = await getAlgorithmCost(sortFn, arr);
+        option.current = pushChartData(option.current, i, cost);
+        console.log('arr :>> ', arr);
+      }
       setChartOption(option.current);
+      await sleep(1000);
     }
-    setLog('冒泡排序结束');
+
+    setLog('排序结束');
+
     setIsBtnLoading(false);
   };
 
@@ -51,8 +62,8 @@ export default function IndexPage() {
         <Button type="primary" loading={isBtnLoading} onClick={handleGenerate}>
           生成
         </Button>
+        <span className="log">{log}</span>
       </div>
-      <p className="log">{log}</p>
 
       <div className="chart">
         {chartOption && (

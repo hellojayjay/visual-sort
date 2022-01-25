@@ -31,17 +31,14 @@ export function pushChartData(option: any, lineIndex: number, time: number) {
   const config = option.series[lineIndex];
 
   if (config) {
-    return {
-      ...option,
-      series: option.series.splice(lineIndex, 1, {
-        ...config,
-        data: config.data.push(time),
-      }),
-    };
+    config.data.push(time);
+
+    return { ...option };
   } else {
     return {
       ...option,
       series: [
+        ...option.series,
         {
           type: 'line',
           smooth: true,
