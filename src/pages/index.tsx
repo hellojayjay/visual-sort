@@ -14,6 +14,7 @@ import { bubbleSort } from '@/algorithms/bubbleSort';
 import { sleep } from '@/utils/common';
 import { selectionSort } from '@/algorithms/selectionSort';
 import { insertionSort } from '@/algorithms/insertionSort';
+import { shellSort } from '@/algorithms/shellSort';
 
 const sorts = [
   {
@@ -27,6 +28,10 @@ const sorts = [
   {
     name: 'insertionSort',
     fn: insertionSort,
+  },
+  {
+    name: 'shellSort',
+    fn: shellSort,
   },
 ];
 
@@ -71,7 +76,7 @@ export default function IndexPage() {
         <span className="label">请输入随机数组最大长度</span>
         <InputNumber
           min={1000}
-          max={100000}
+          max={1000000}
           value={maxLength}
           onChange={(value) => setMaxLength(value)}
         />

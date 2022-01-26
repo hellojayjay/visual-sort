@@ -1,7 +1,7 @@
 import { exchange } from '@/utils/sort';
 
 export function selectionSort(arr: number[]) {
-  var len = arr.length;
+  const len = arr.length;
   for (var i = 0; i < len - 1; i++) {
     let minIndex = i;
 
