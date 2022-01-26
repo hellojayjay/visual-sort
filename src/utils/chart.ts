@@ -23,7 +23,7 @@ export function generateXAxisData(length: number) {
   const interval = Math.floor(length / X_AXIS_LENGTH);
   const data = [];
 
-  for (let i = 0; i < X_AXIS_LENGTH - 1; i++) {
+  for (let i = 0; i <= X_AXIS_LENGTH; i++) {
     data.push(interval * i);
   }
 

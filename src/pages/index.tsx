@@ -16,8 +16,13 @@ import { selectionSort } from '@/algorithms/selectionSort';
 import { insertionSort } from '@/algorithms/insertionSort';
 import { shellSort } from '@/algorithms/shellSort';
 import { mergeSort } from '@/algorithms/mergeSort';
+import { quickSort } from '@/algorithms/quickSort';
 
 const sorts = [
+  {
+    name: 'quickSort',
+    fn: quickSort,
+  },
   {
     name: 'mergeSort',
     fn: mergeSort,
