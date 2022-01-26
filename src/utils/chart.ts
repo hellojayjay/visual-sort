@@ -1,5 +1,8 @@
-export function generateChartOption(xAxisData: number[]) {
+export function generateChartOption(xAxisData: number[], legendData: string[]) {
   return {
+    legend: {
+      data: legendData,
+    },
     xAxis: {
       type: 'category',
       data: xAxisData,
@@ -27,7 +30,16 @@ export function generateXAxisData(length: number) {
   return data;
 }
 
-export function pushChartData(option: any, lineIndex: number, time: number) {
+export function generateLegendData(sorts: any[]) {
+  return sorts.map((s) => s.name);
+}
+
+export function pushChartData(
+  option: any,
+  lineIndex: number,
+  time: number,
+  sortName: string = '',
+) {
   const config = option.series[lineIndex];
 
   if (config) {
@@ -40,6 +52,7 @@ export function pushChartData(option: any, lineIndex: number, time: number) {
       series: [
         ...option.series,
         {
+          name: sortName,
           type: 'line',
           smooth: true,
           data: [time],

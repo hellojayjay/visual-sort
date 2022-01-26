@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import {
   generateChartOption,
+  generateLegendData,
   generateRandomArr,
   generateXAxisData,
   getAlgorithmCost,
@@ -39,7 +40,8 @@ export default function IndexPage() {
   const handleGenerate = async () => {
     setIsBtnLoading(true);
     const xAxisData = generateXAxisData(maxLength);
-    option.current = generateChartOption(xAxisData);
+    const legendData = generateLegendData(sorts);
+    option.current = generateChartOption(xAxisData, legendData);
 
     for (let i = 0; i < sorts.length; i++) {
       const sort = sorts[i];
@@ -49,7 +51,7 @@ export default function IndexPage() {
       for (const length of xAxisData) {
         const arr = generateRandomArr(length);
         const cost = await getAlgorithmCost(sort.fn, arr);
-        option.current = pushChartData(option.current, i, cost);
+        option.current = pushChartData(option.current, i, cost, sort.name);
         console.log('arr :>> ', arr);
       }
       setChartOption(option.current);
